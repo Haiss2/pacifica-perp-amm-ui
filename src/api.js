@@ -1,6 +1,7 @@
 export const ACCOUNT = import.meta.env.VITE_ACCOUNT_ADDRESS
 
 const BASE_URL = 'https://api.pacifica.fi/api/v1'
+const PERP_AMM_URL = import.meta.env.VITE_PERP_AMM_ENDPOINT.replace(/\/$/, '')
 
 async function getJson(url) {
   const res = await fetch(url)
@@ -33,13 +34,13 @@ export async function fetchPositionsData() {
 }
 
 export function fetchConfig() {
-  return getJson('/api/config')
+  return getJson(`${PERP_AMM_URL}/config`)
 }
 
 export function fetchPricing() {
-  return getJson('/api/pricing')
+  return getJson(`${PERP_AMM_URL}/pricing`)
 }
 
 export function fetchTrades() {
-  return getJson('/api/trades')
+  return getJson(`${PERP_AMM_URL}/trades`)
 }

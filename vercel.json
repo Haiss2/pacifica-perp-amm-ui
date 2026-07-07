@@ -1,7 +1,0 @@
-{
-  "rewrites": [
-    { "source": "/api/config", "destination": "https://prod-perp-amm.knreserve.com/config" },
-    { "source": "/api/pricing", "destination": "https://prod-perp-amm.knreserve.com/pricing" },
-    { "source": "/api/trades", "destination": "https://prod-perp-amm.knreserve.com/trades" }
-  ]
-}
