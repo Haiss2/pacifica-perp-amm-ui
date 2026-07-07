@@ -1,5 +1,6 @@
 import { Fragment, useMemo, useState } from 'react'
 import { MARKOUT_WINDOWS, summarizePnlByTrades } from '../lib/pnl'
+import { TIME_RANGES } from '../lib/timeRanges'
 
 const MARKOUT_GROUPS = [
   { key: 'markout_pnl', label: 'Markout' },
@@ -32,7 +33,7 @@ function pnlClass(value) {
   return n >= 0 ? 'positive' : 'negative'
 }
 
-export default function PnlSummary({ title, trades, loading, error }) {
+export default function PnlSummary({ title, trades, loading, error, timeRange, onTimeRangeChange }) {
   const [usePricingMid, setUsePricingMid] = useState(false)
   const midField = usePricingMid ? 'pricing_mid' : 'binance_mid'
   const data = useMemo(() => summarizePnlByTrades(trades, midField), [trades, midField])
@@ -57,14 +58,28 @@ export default function PnlSummary({ title, trades, loading, error }) {
   return (
     <>
       <div className="section-header">
-        <h2 className="tab-section-title">{title}</h2>
+        <div className="section-header-left">
+          <h2 className="tab-section-title">{title}</h2>
+          <div className="section-actions">
+            {TIME_RANGES.map((range) => (
+              <label key={range.id} className="checkbox-field">
+                <input
+                  type="checkbox"
+                  checked={timeRange === range.id}
+                  onChange={() => onTimeRangeChange(range.id)}
+                />
+                {range.label}
+              </label>
+            ))}
+          </div>
+        </div>
         <label className="checkbox-field">
           <input
             type="checkbox"
             checked={usePricingMid}
             onChange={(e) => setUsePricingMid(e.target.checked)}
           />
-          Use pricing_mid for markout (default is Binance USDT_pair mid price)
+          Use fair price for markout (Deafult: Binance USDT)
         </label>
       </div>
       <div className="table-wrap">

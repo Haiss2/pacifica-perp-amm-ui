@@ -178,7 +178,7 @@ export default function RecentTrades({ title, trades, loading, error }) {
             checked={usePricingMid}
             onChange={(e) => setUsePricingMid(e.target.checked)}
           />
-          Use pricing_mid for markout (default is Binance USDT_pair mid price)
+          Use fair price for markout (Deafult: Binance USDT)
         </label>
       </div>
       <div className="table-wrap">

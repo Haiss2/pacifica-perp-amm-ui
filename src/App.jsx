@@ -8,6 +8,7 @@ import Configuration from './components/Configuration'
 import { usePolledResource } from './hooks/usePolledResource'
 import { fetchPositionsData, fetchPricing, fetchTrades, fetchConfig } from './api'
 import { TABS } from './tabs'
+import { TIME_RANGES, DEFAULT_TIME_RANGE } from './lib/timeRanges'
 import './App.css'
 
 function App() {
@@ -15,6 +16,8 @@ function App() {
   const [activeTab, setActiveTab] = useState(TABS[0].id)
   const [refreshToken, setRefreshToken] = useState(0)
   const [lastUpdated, setLastUpdated] = useState(null)
+  const [timeRange, setTimeRange] = useState(DEFAULT_TIME_RANGE)
+  const selectedRange = TIME_RANGES.find((r) => r.id === timeRange) ?? TIME_RANGES[0]
   const contentRef = useRef(null)
   const sectionRefs = useRef({})
   const visibleRatios = useRef({})
@@ -31,10 +34,14 @@ function App() {
     refreshToken,
     onUpdate: handleUpdate,
   })
-  const tradesResource = usePolledResource(fetchTrades, {
-    refreshToken,
-    onUpdate: handleUpdate,
-  })
+  const tradesResource = usePolledResource(
+    () => fetchTrades(Date.now() - selectedRange.ms),
+    {
+      refreshToken,
+      onUpdate: handleUpdate,
+      deps: [timeRange],
+    },
+  )
   const configResource = usePolledResource(fetchConfig, {
     refreshToken,
     onUpdate: handleUpdate,
@@ -129,11 +136,13 @@ function App() {
                   trades={tradesResource.data ?? []}
                   loading={tradesResource.loading}
                   error={tradesResource.error}
+                  timeRange={timeRange}
+                  onTimeRangeChange={setTimeRange}
                 />
               )}
               {tab.id === 'recent-trades' && (
                 <RecentTrades
-                  title={tab.label}
+                  title={`${tab.label} (${selectedRange.label})`}
                   trades={tradesResource.data ?? []}
                   loading={tradesResource.loading}
                   error={tradesResource.error}

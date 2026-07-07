@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 
 const POLL_MS = 5000
 
-export function usePolledResource(fetchFn, { refreshToken = 0, onUpdate } = {}) {
+export function usePolledResource(fetchFn, { refreshToken = 0, onUpdate, deps = [] } = {}) {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -37,7 +37,8 @@ export function usePolledResource(fetchFn, { refreshToken = 0, onUpdate } = {}) 
       cancelled = true
       clearInterval(interval)
     }
-  }, [refreshToken])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refreshToken, ...deps])
 
   return { data, loading, error }
 }

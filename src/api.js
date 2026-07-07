@@ -41,6 +41,7 @@ export function fetchPricing() {
   return getJson(`${PERP_AMM_URL}/pricing`)
 }
 
-export function fetchTrades() {
-  return getJson(`${PERP_AMM_URL}/trades`)
+export function fetchTrades(startTime) {
+  const query = startTime ? `?start_time=${startTime}` : ''
+  return getJson(`${PERP_AMM_URL}/trades${query}`)
 }
