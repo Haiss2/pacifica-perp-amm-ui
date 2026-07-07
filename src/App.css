@@ -1,0 +1,500 @@
+.app {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.sidebar {
+  width: 16.6667%;
+  min-width: 180px;
+  max-width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--code-bg);
+  border-right: 1px solid var(--border);
+  overflow-x: hidden;
+  overflow-y: auto;
+  transition: width 0.2s ease, min-width 0.2s ease, max-width 0.2s ease, border-color 0.2s ease;
+}
+
+.app.sidebar-collapsed .sidebar {
+  width: 0;
+  min-width: 0;
+  max-width: 0;
+  border-right-color: transparent;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 69px;
+  padding: 0 16px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-h);
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-header .logo {
+  width: 80px;
+  height: 24px;
+}
+
+.sidebar [role="tablist"] ul {
+  list-style: none;
+  margin: 0;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sidebar [role="tablist"] button {
+  width: 100%;
+  text-align: left;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text);
+  font-size: 15px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sidebar [role="tablist"] button:hover {
+  background: var(--accent-bg);
+}
+
+.sidebar [role="tablist"] button.active {
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 69px;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  padding: 0;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 1;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.toggle-btn:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.last-updated {
+  font-size: 14px;
+  color: var(--text);
+}
+
+.refresh-btn {
+  margin-left: auto;
+}
+
+.content {
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+}
+
+.tab-section {
+  scroll-margin-top: 24px;
+}
+
+.tab-section:not(:last-child) {
+  margin-bottom: 48px;
+  padding-bottom: 48px;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-section-title {
+  margin: 0 0 16px;
+  font-size: 18px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.section-header .tab-section-title {
+  margin: 0;
+}
+
+.section-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.checkbox-field input {
+  cursor: pointer;
+}
+
+.action-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.action-btn:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+.action-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.action-btn:disabled:hover {
+  border-color: var(--border);
+  color: var(--text-h);
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.pagination-info {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.pagination-size {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text);
+  margin-right: auto;
+}
+
+.pagination-size select {
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.status {
+  color: var(--text);
+}
+
+.status.error {
+  color: #e5484d;
+}
+
+.json-view-container {
+  background: transparent !important;
+}
+
+.json-view {
+  margin: 0;
+  min-height: 80vh;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: auto;
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+.account-summary {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 0 0 20px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  max-width: 100%;
+}
+
+.account-summary-row {
+  display: flex;
+  gap: 8px;
+}
+
+.account-summary-row dt {
+  min-width: 140px;
+  color: var(--text);
+}
+
+.account-summary-row dd {
+  margin: 0;
+  color: var(--text-h);
+  font-family: var(--mono);
+  word-break: break-all;
+}
+
+.account-summary-row dd.positive {
+  color: #16a34a;
+}
+
+.account-summary-row dd.negative {
+  color: #e5484d;
+}
+
+.account-summary-row a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.account-summary-row a:hover {
+  text-decoration: underline;
+}
+
+.positions-title {
+  margin-top: 32px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.data-table th,
+.data-table td {
+  padding: 10px 14px;
+  text-align: right;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+
+.trades-table th,
+.trades-table td {
+  padding: 3px 14px;
+}
+
+.data-table td:first-child {
+  text-align: left;
+}
+
+.data-table thead tr:first-child th:first-child {
+  text-align: left;
+}
+
+.data-table td.col-center:first-child,
+.data-table thead tr:first-child th.col-center:first-child {
+  text-align: center;
+}
+
+.trades-table {
+  table-layout: fixed;
+}
+
+.trades-table th,
+.trades-table td {
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.trades-table td:first-child,
+.trades-table th:first-child {
+  text-align: center;
+}
+
+.trades-table thead tr:first-child th:first-child {
+  text-align: center;
+}
+
+.trades-table thead tr:first-child th {
+  vertical-align: top;
+}
+
+.data-table th {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.sort-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.sort-header:hover {
+  color: var(--accent);
+}
+
+.sort-arrows {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 0.6;
+  font-size: 8px;
+}
+
+.sort-arrow {
+  color: var(--border);
+}
+
+.sort-arrow.active {
+  color: var(--accent);
+}
+
+.th-filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.th-filter select {
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 400;
+  font-size: 11px;
+  padding: 2px 4px;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text-h);
+  border-radius: 4px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.data-table th.group-header {
+  text-align: center;
+}
+
+.data-table .col-center {
+  text-align: center;
+}
+
+.data-table .group-start {
+  border-left: 1px solid var(--border);
+}
+
+.data-table td.symbol {
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.data-table tfoot td {
+  border-bottom: none;
+  border-top: 2px solid var(--border);
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.data-table tfoot td.positive {
+  color: #16a34a;
+}
+
+.data-table tfoot td.negative {
+  color: #e5484d;
+}
+
+.symbol-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.symbol-logo {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.positive {
+  color: #16a34a;
+}
+
+.negative {
+  color: #e5484d;
+}
+
+.badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.badge.long {
+  background: rgba(22, 163, 74, 0.12);
+  color: #16a34a;
+}
+
+.badge.short {
+  background: rgba(229, 72, 77, 0.12);
+  color: #e5484d;
+}
