@@ -34,9 +34,16 @@ function pnlClass(value) {
 }
 
 export default function PnlSummary({ title, trades, loading, error, timeRange, onTimeRangeChange }) {
-  const [usePricingMid, setUsePricingMid] = useState(false)
-  const midField = usePricingMid ? 'pricing_mid' : 'binance_mid'
-  const data = useMemo(() => summarizePnlByTrades(trades, midField), [trades, midField])
+  const [reduceFilter, setReduceFilter] = useState('')
+
+  const filteredTrades = useMemo(
+    () =>
+      reduceFilter
+        ? trades.filter((trade) => (trade.Reduce ? 'Yes' : 'No') === reduceFilter)
+        : trades,
+    [trades, reduceFilter],
+  )
+  const data = useMemo(() => summarizePnlByTrades(filteredTrades), [filteredTrades])
 
   if (loading) return <p className="status">Loading PNL summary…</p>
   if (error) return <p className="status error">Error: {error}</p>
@@ -73,13 +80,13 @@ export default function PnlSummary({ title, trades, loading, error, timeRange, o
             ))}
           </div>
         </div>
-        <label className="checkbox-field">
-          <input
-            type="checkbox"
-            checked={usePricingMid}
-            onChange={(e) => setUsePricingMid(e.target.checked)}
-          />
-          Use fair price for markout (Deafult: Binance USDT)
+        <label className="select-filter">
+          <span>Reduce</span>
+          <select value={reduceFilter} onChange={(e) => setReduceFilter(e.target.value)}>
+            <option value="">All</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
         </label>
       </div>
       <div className="table-wrap">

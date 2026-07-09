@@ -98,12 +98,11 @@ function FilterableHeader({ label, options, value, onChange }) {
 export default function RecentTrades({ title, trades, loading, error }) {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(PAGE_SIZE_OPTIONS[1])
-  const [usePricingMid, setUsePricingMid] = useState(false)
   const [sort, setSort] = useState({ column: null, direction: null })
   const [symbolFilter, setSymbolFilter] = useState('')
   const [sideFilter, setSideFilter] = useState('')
   const [reduceFilter, setReduceFilter] = useState('')
-  const midField = usePricingMid ? 'pricing_mid' : 'binance_mid'
+  const midField = 'binance_mid'
 
   if (loading) return <p className="status">Loading recent trades…</p>
   if (error) return <p className="status error">Error: {error}</p>
@@ -172,14 +171,6 @@ export default function RecentTrades({ title, trades, loading, error }) {
     <>
       <div className="section-header">
         <h2 className="tab-section-title">{title}</h2>
-        <label className="checkbox-field">
-          <input
-            type="checkbox"
-            checked={usePricingMid}
-            onChange={(e) => setUsePricingMid(e.target.checked)}
-          />
-          Use fair price for markout (Deafult: Binance USDT)
-        </label>
       </div>
       <div className="table-wrap">
         <table className="data-table trades-table">
