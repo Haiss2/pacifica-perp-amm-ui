@@ -42,7 +42,44 @@
   height: 24px;
 }
 
-.sidebar [role="tablist"] ul {
+.mode-switch {
+  display: flex;
+  gap: 4px;
+  margin: 12px;
+  padding: 4px;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+
+.mode-switch button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px 4px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.mode-switch button:hover {
+  color: var(--accent);
+}
+
+.mode-switch button.active {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+
+.sidebar .tab-list ul {
   list-style: none;
   margin: 0;
   padding: 12px;
@@ -51,7 +88,7 @@
   gap: 4px;
 }
 
-.sidebar [role="tablist"] button {
+.sidebar .tab-list button {
   width: 100%;
   text-align: left;
   padding: 10px 12px;
@@ -65,11 +102,11 @@
   transition: background 0.2s, color 0.2s;
 }
 
-.sidebar [role="tablist"] button:hover {
+.sidebar .tab-list button:hover {
   background: var(--accent-bg);
 }
 
-.sidebar [role="tablist"] button.active {
+.sidebar .tab-list button.active {
   background: var(--accent-bg);
   color: var(--accent);
   font-weight: 600;

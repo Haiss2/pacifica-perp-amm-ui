@@ -6,14 +6,17 @@ import PnlSummary from './components/PnlSummary'
 import RecentTrades from './components/RecentTrades'
 import Configuration from './components/Configuration'
 import { usePolledResource } from './hooks/usePolledResource'
-import { fetchPositionsData, fetchPricing, fetchTrades, fetchConfig } from './api'
+import { useLocalStorage } from './hooks/useLocalStorage'
+import { fetchPositionsData, fetchPricing, fetchTrades, fetchConfig, setApiMode } from './api'
 import { TABS } from './tabs'
+import { DEFAULT_MODE, MODE_STORAGE_KEY, getModeFromQuery } from './modes'
 import { TIME_RANGES, DEFAULT_TIME_RANGE } from './lib/timeRanges'
 import './App.css'
 
 function App() {
   const [collapsed, setCollapsed] = useState(false)
   const [activeTab, setActiveTab] = useState(TABS[0].id)
+  const [mode, setMode] = useLocalStorage(MODE_STORAGE_KEY, DEFAULT_MODE)
   const [refreshToken, setRefreshToken] = useState(0)
   const [lastUpdated, setLastUpdated] = useState(null)
   const [timeRange, setTimeRange] = useState(DEFAULT_TIME_RANGE)
@@ -21,6 +24,7 @@ function App() {
   const contentRef = useRef(null)
   const sectionRefs = useRef({})
   const visibleRatios = useRef({})
+  const isFirstModeRender = useRef(true)
 
   function handleUpdate(timestamp) {
     setLastUpdated((prev) => (!prev || timestamp > prev ? timestamp : prev))
@@ -64,6 +68,21 @@ function App() {
     return () => observer.disconnect()
   }, [])
 
+  useEffect(() => {
+    if (isFirstModeRender.current) {
+      isFirstModeRender.current = false
+      return
+    }
+    setApiMode(mode)
+    setRefreshToken((t) => t + 1)
+  }, [mode])
+
+  useEffect(() => {
+    const queryMode = getModeFromQuery()
+    if (queryMode) setMode(queryMode)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   function handleSelectTab(id) {
     sectionRefs.current[id]?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
@@ -74,7 +93,12 @@ function App() {
 
   return (
     <div className={`app ${collapsed ? 'sidebar-collapsed' : ''}`}>
-      <Sidebar activeTab={activeTab} onSelectTab={handleSelectTab} />
+      <Sidebar
+        activeTab={activeTab}
+        onSelectTab={handleSelectTab}
+        mode={mode}
+        onSelectMode={setMode}
+      />
       <div className="main">
         <div className="topbar">
           <button
